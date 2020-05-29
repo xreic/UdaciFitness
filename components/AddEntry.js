@@ -1,6 +1,13 @@
+// Dependencies
 import React, { Component } from 'react';
 import { View } from 'react-native';
+
+// Helpers
 import { getMetricMetaInfo } from '../utils/helpers';
+
+// React
+import UdaciSlider from './UdaciSlider';
+import UdaciSteppers from './UdaciSteppers';
 
 class AddEntry extends Component {
   state = {
