@@ -203,5 +203,5 @@ export function getMetricMetaInfo(metric) {
     }
   };
 
-  return typeof metric === undefined ? info : info[metric];
+  return typeof metric === 'undefined' ? info : info[metric];
 }

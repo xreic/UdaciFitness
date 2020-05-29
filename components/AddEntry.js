@@ -63,7 +63,36 @@ class AddEntry extends Component {
   };
 
   render() {
-    return <View>{getMetricMetaInfo('bike').getIcon()}</View>;
+    const metaInfo = getMetricMetaInfo();
+
+    return (
+      <View>
+        {Object.keys(metaInfo).map((key) => {
+          const { getIcon, type, ...rest } = metaInfo[key];
+          const value = this.state[key];
+
+          return (
+            <View key={key}>
+              {getIcon()}
+              {type === 'slider' ? (
+                <UdaciSlider
+                  value={value}
+                  onChange={(value) => this.slide(key, value)}
+                  {...rest}
+                />
+              ) : (
+                <UdaciSteppers
+                  value={value}
+                  onIncrement={() => this.increment(key)}
+                  onDecrement={() => this.decrement(key)}
+                  {...rest}
+                />
+              )}
+            </View>
+          );
+        })}
+      </View>
+    );
   }
 }
 
