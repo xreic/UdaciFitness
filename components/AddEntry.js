@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 // Helpers
 import { getMetricMetaInfo, timeToString } from '../utils/helpers';
@@ -9,6 +10,7 @@ import { getMetricMetaInfo, timeToString } from '../utils/helpers';
 import UdaciSlider from './UdaciSlider';
 import UdaciSteppers from './UdaciSteppers';
 import DateHeader from './DateHeader';
+import TextButton from './TextButton';
 
 function SubmitBtn({ onPress }) {
   return (
@@ -89,8 +91,26 @@ class AddEntry extends Component {
     // TODO Clear local notification
   };
 
+  reset = () => {
+    const key = timeToString();
+
+    // TODO Update Redux
+    // TODO Route to Home
+    // TODO Update DB
+  };
+
   render() {
     const metaInfo = getMetricMetaInfo();
+
+    if (this.props.alreadyLogged) {
+      return (
+        <View>
+          <Ionicons name="md-happy" size={100} />
+          <Text>You already logged your information for today.</Text>
+          <TextButton onPress={this.reset}>Reset</TextButton>
+        </View>
+      );
+    }
 
     return (
       <View>
