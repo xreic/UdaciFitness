@@ -1,10 +1,15 @@
 // Dependencies
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 // Helpers
-import { getMetricMetaInfo, timeToString } from '../utils/helpers';
+import {
+  getMetricMetaInfo,
+  timeToString,
+  getDailyReminderValue
+} from '../utils/helpers';
 import { submitEntry, removeEntry } from '../utils/api';
 
 // React
@@ -12,6 +17,7 @@ import UdaciSlider from './UdaciSlider';
 import UdaciSteppers from './UdaciSteppers';
 import DateHeader from './DateHeader';
 import TextButton from './TextButton';
+import { addEntry } from '../actions';
 
 function SubmitBtn({ onPress }) {
   return (
@@ -19,6 +25,18 @@ function SubmitBtn({ onPress }) {
       <Text>Submit</Text>
     </TouchableOpacity>
   );
+}
+
+function mapStateToProps(state) {
+  const key = timeToString();
+
+  /**
+   * Check in the state if that property exists
+   * Check if "today" has been set or not for that property
+   */
+  return {
+    alreadyLogged: state[key] && typeof state[key].today === 'undefined'
+  };
 }
 
 class AddEntry extends Component {
@@ -79,6 +97,12 @@ class AddEntry extends Component {
     const entry = this.state;
 
     // TODO Update Redux
+    this.props.dispatch(
+      addEntry({
+        [key]: entry
+      })
+    );
+
     this.setState(() => ({
       run: 0,
       bike: 0,
@@ -90,6 +114,7 @@ class AddEntry extends Component {
     // TODO Navigate to Home
 
     // TODO Save to DB (local storage)
+
     submitEntry({ key, entry });
 
     // TODO Clear local notification
@@ -99,6 +124,12 @@ class AddEntry extends Component {
     const key = timeToString();
 
     // TODO Update Redux
+    this.props.dispatch(
+      addEntry({
+        [key]: getDailyReminderValue()
+      })
+    );
+
     // TODO Route to Home
     // TODO Update DB (local storage)
     removeEntry(key);
@@ -150,4 +181,4 @@ class AddEntry extends Component {
   }
 }
 
-export default AddEntry;
+export default connect(mapStateToProps)(AddEntry);
