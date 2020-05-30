@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Helpers
 import { getMetricMetaInfo, timeToString } from '../utils/helpers';
+import { submitEntry, removeEntry } from '../utils/api';
 
 // React
 import UdaciSlider from './UdaciSlider';
@@ -87,7 +88,10 @@ class AddEntry extends Component {
     }));
 
     // TODO Navigate to Home
-    // TODO Save to DB
+
+    // TODO Save to DB (local storage)
+    submitEntry({ key, entry });
+
     // TODO Clear local notification
   };
 
@@ -96,7 +100,8 @@ class AddEntry extends Component {
 
     // TODO Update Redux
     // TODO Route to Home
-    // TODO Update DB
+    // TODO Update DB (local storage)
+    removeEntry(key);
   };
 
   render() {
