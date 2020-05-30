@@ -1,6 +1,6 @@
 import { RECIEVE_ENTRIES, ADD_ENTRY } from '../actions';
 
-export const entries = (state = {}, action) => {
+export const reducer = (state = {}, action) => {
   switch (action.type) {
     case RECIEVE_ENTRIES:
       return {
