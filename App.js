@@ -8,7 +8,7 @@ import { reducer } from './reducers/index';
 
 const App = () => (
   <Provider store={createStore(reducer)}>
-    <View>
+    <View style={{ flex: 1 }}>
       <AddEntry />
     </View>
   </Provider>
